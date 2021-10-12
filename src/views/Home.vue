@@ -43,7 +43,7 @@
 									@click.prevent="removeHobby(index)"
 								>
 									<div>{{ hobby }} - {{ index }}</div>
-									<input type="text" @click.stop />
+									<input type="text" :ref="'v' + index" @click.stop />
 									&nbsp;
 									<span>
 										<button
@@ -103,12 +103,16 @@ export default {
 	},
 	methods: {
 		onHobbySubmit() {
-			this.hobbies.push(this.enteredHobbyValue);
-			this.enteredHobbyValue = '';
-			this.showResult = false;
-			this.resultHobbies = [];
-			this.animetion = false;
-			this.animetionBtnAdd = false;
+			if (this.enteredHobbyValue) {
+				this.hobbies.push(this.enteredHobbyValue);
+				this.enteredHobbyValue = '';
+				this.showResult = false;
+				this.resultHobbies = [];
+				this.animetion = false;
+				this.animetionBtnAdd = false;
+			} else {
+				alert('Fill Up hobby fild');
+			}
 		},
 		removeHobby(index) {
 			this.hobbies.splice(index, 1);
@@ -118,8 +122,17 @@ export default {
 		},
 		submmitDone() {
 			this.showResult = true;
-			this.hobbies.forEach(hobby => {
-				this.resultHobbies.push(hobby);
+			this.hobbies.forEach((hobby, key) => {
+				let newkey = 'v' + key;
+				let conbineValue;
+				if (this.$refs[newkey].value) {
+					let txtValue = this.$refs[newkey].value;
+					conbineValue = hobby + ' - ' + txtValue;
+				} else {
+					conbineValue = hobby;
+				}
+
+				this.resultHobbies.push(conbineValue);
 			});
 			this.hobbies = [];
 			this.animetionBtnSubmmit = false;
@@ -138,7 +151,6 @@ export default {
 		}
 	},
 	updated() {
-		console.log(this.animetionBtnSubmmit);
 		this.animetion = true;
 		this.animetionBtnAdd = true;
 		this.animetionBtnSubmmit = true;

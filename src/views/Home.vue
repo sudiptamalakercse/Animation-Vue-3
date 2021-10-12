@@ -113,7 +113,7 @@ export default {
 				this.showResult = false;
 				this.resultHobbies = [];
 			} else {
-				alert('Fill Up hobby fild');
+				alert('Fill Up hobby field');
 			}
 		},
 		removeHobby(index) {

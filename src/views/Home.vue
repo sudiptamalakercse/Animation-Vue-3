@@ -12,8 +12,11 @@
 							v-model="enteredHobbyValue"
 						/>
 					</div>
-					<transition name="animetionBtnAdd">
+					<transition name="animetionBtnAdd" mode="out-in">
 						<button class="btn btn-primary" v-if="animetionBtnAdd == true">
+							Add Hobby
+						</button>
+						<button class="btn btn-primary" v-else>
 							Add Hobby
 						</button>
 					</transition>
@@ -103,13 +106,12 @@ export default {
 	},
 	methods: {
 		onHobbySubmit() {
+			this.animetionBtnAdd = !this.animetionBtnAdd;
 			if (this.enteredHobbyValue) {
 				this.hobbies.push(this.enteredHobbyValue);
 				this.enteredHobbyValue = '';
 				this.showResult = false;
 				this.resultHobbies = [];
-				this.animetion = false;
-				this.animetionBtnAdd = false;
 			} else {
 				alert('Fill Up hobby fild');
 			}
@@ -152,7 +154,6 @@ export default {
 	},
 	updated() {
 		this.animetion = true;
-		this.animetionBtnAdd = true;
 		this.animetionBtnSubmmit = true;
 	}
 };
@@ -215,7 +216,7 @@ export default {
 	opacity: 1;
 }
 .animetionBtnAdd-enter-active {
-	transition: all 1.5s ease;
+	transition: all 1.3s ease;
 }
 .animetionBtnAdd-leave-from {
 	opacity: 1;
@@ -226,7 +227,7 @@ export default {
 	transform: scaleX(1);
 }
 .animetionBtnAdd-leave-active {
-	transition: all 1.5s ease;
+	transition: all 1.3s ease;
 }
 .animetionBtnSubmmit-enter-from {
 	opacity: 0;
